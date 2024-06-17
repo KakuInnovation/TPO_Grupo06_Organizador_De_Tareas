@@ -1,9 +1,10 @@
 public class Main {
     public static void main(String[] args) {
-        Usuario usuario1 = new Usuario("Alejandro");
-        Usuario usuario2 = new Usuario("Matias");
+        Usuario usuario1 = new Usuario("Matías");
+        Usuario usuario2 = new Usuario("Lautaro");
+        Usuario usuario3 = new Usuario("Alejandro");
 
-        Tarea tarea1 = new Tarea("Diseñar base de datos", usuario1);
+        Tarea tarea1 = new Tarea("Diseñar base de datos", usuario3);
         Subtarea subtarea1 = new Subtarea("Crear tablas", usuario1);
         Subtarea subtarea2 = new Subtarea("Definir relaciones", usuario2);
         tarea1.agregarSubtarea(subtarea1);
