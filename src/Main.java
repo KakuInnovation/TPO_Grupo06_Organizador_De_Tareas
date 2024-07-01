@@ -11,6 +11,12 @@ public class Main {
         tarea1.agregarSubtarea(subtarea2);
 
         Tarea tarea2 = new Tarea("Desarrollar API", usuario2);
+        Subtarea subtarea3 = new Subtarea("Conectar middleware", usuario2);
+        Subtarea subtarea4 = new Subtarea("Definir protocolo", usuario3);
+        Subtarea subtarea5 = new Subtarea("Permisos de accesos", usuario3);
+        tarea2.agregarSubtarea(subtarea3);
+        tarea2.agregarSubtarea(subtarea4);
+        tarea2.agregarSubtarea(subtarea5);
 
         Proyecto proyecto = new Proyecto("Desarrollo de un Sistema");
         proyecto.agregarTarea(tarea1);
@@ -19,7 +25,11 @@ public class Main {
         tarea1.setEstado(new EnProgreso());
         subtarea1.setEstado(new Completada());
         subtarea2.setEstado(new EnProgreso());
-        tarea2.setEstado(new Pendiente());
+
+        subtarea3.setEstado(new EnProgreso());
+        subtarea4.setEstado(new Pendiente());
+        subtarea5.setEstado(new Completada());
+        tarea2.setEstado(new EnProgreso());
 
         proyecto.mostrarProyecto();
     }
