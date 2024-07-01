@@ -25,6 +25,7 @@ public class Main {
 
         proyecto.mostrarProyecto();
 
+        
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
