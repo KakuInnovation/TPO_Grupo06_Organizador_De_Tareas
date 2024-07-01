@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Usuario usuario1 = new Usuario("Matías");
@@ -11,12 +13,6 @@ public class Main {
         tarea1.agregarSubtarea(subtarea2);
 
         Tarea tarea2 = new Tarea("Desarrollar API", usuario2);
-        Subtarea subtarea3 = new Subtarea("Conectar middleware", usuario2);
-        Subtarea subtarea4 = new Subtarea("Definir protocolo", usuario3);
-        Subtarea subtarea5 = new Subtarea("Permisos de accesos", usuario3);
-        tarea2.agregarSubtarea(subtarea3);
-        tarea2.agregarSubtarea(subtarea4);
-        tarea2.agregarSubtarea(subtarea5);
 
         Proyecto proyecto = new Proyecto("Desarrollo de un Sistema");
         proyecto.agregarTarea(tarea1);
@@ -25,15 +21,11 @@ public class Main {
         tarea1.setEstado(new EnProgreso());
         subtarea1.setEstado(new Completada());
         subtarea2.setEstado(new EnProgreso());
-
-        subtarea3.setEstado(new EnProgreso());
-        subtarea4.setEstado(new Pendiente());
-        subtarea5.setEstado(new Completada());
-        tarea2.setEstado(new EnProgreso());
+        tarea2.setEstado(new Pendiente());
 
         proyecto.mostrarProyecto();
 
-        
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -63,4 +55,66 @@ public class Main {
             }
         }
     }
+    private static void cambiarEstadoSubtarea(Proyecto proyecto, Scanner scanner) {
+        System.out.println("\nSeleccione una tarea para ver sus subtareas:");
+        for (int i = 0; i < proyecto.getTareas().size(); i++) {
+            System.out.println((i + 1) + ". " + proyecto.getTareas().get(i).getDescripcion());
+        }
+
+        int seleccionTarea = scanner.nextInt();
+        if (seleccionTarea > 0 && seleccionTarea <= proyecto.getTareas().size()) {
+            Tarea tarea = proyecto.getTareas().get(seleccionTarea - 1);
+            System.out.println("Seleccione una subtarea para cambiar su estado:");
+            for (int i = 0; i < tarea.getSubtareas().size(); i++) {
+                System.out.println((i + 1) + ". " + tarea.getSubtareas().get(i).getDescripcion());
+            }
+
+            int seleccionSubtarea = scanner.nextInt();
+            if (seleccionSubtarea > 0 && seleccionSubtarea <= tarea.getSubtareas().size()) {
+                Subtarea subtarea = tarea.getSubtareas().get(seleccionSubtarea - 1);
+                cambiarEstado(subtarea, scanner);
+            } else {
+                System.out.println("Selección no válida.");
+            }
+        } else {
+            System.out.println("Selección no válida.");
+        }
+    }
+
+    private static void cambiarEstado(Tarea tarea, Scanner scanner) {
+        System.out.println("Seleccione el nuevo estado:");
+        System.out.println("1. Pendiente");
+        System.out.println("2. En Progreso");
+        System.out.println("3. Completada");
+
+        int estadoSeleccionado = scanner.nextInt();
+        switch (estadoSeleccionado) {
+            case 1:
+                tarea.setEstado(new Pendiente());
+                break;
+            case 2:
+                tarea.setEstado(new EnProgreso());
+                break;
+            case 3:
+                tarea.setEstado(new Completada());
+                break;
+            default:
+                System.out.println("Selección no válida.");
+        }
+    }
+    private static void cambiarEstadoTarea(Proyecto proyecto, Scanner scanner) {
+        System.out.println("\nSeleccione una tarea para cambiar su estado:");
+        for (int i = 0; i < proyecto.getTareas().size(); i++) {
+            System.out.println((i + 1) + ". " + proyecto.getTareas().get(i).getDescripcion());
+        }
+
+        int seleccion = scanner.nextInt();
+        if (seleccion > 0 && seleccion <= proyecto.getTareas().size()) {
+            Tarea tarea = proyecto.getTareas().get(seleccion - 1);
+            cambiarEstado(tarea, scanner);
+        } else {
+            System.out.println("Selección no válida.");
+        }
+    }
+
 }
