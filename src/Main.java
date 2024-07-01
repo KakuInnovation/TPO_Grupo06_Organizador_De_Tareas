@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Usuario usuario1 = new Usuario("Matías");
+        Proyecto proyecto = null;
+/*        Usuario usuario1 = new Usuario("Matías");
         Usuario usuario2 = new Usuario("Lautaro");
         Usuario usuario3 = new Usuario("Alejandro");
 
@@ -14,7 +15,8 @@ public class Main {
 
         Tarea tarea2 = new Tarea("Desarrollar API", usuario2);
 
-        Proyecto proyecto = new Proyecto("Desarrollo de un Sistema");
+        // Instancia Singleton
+        Proyecto proyecto = Proyecto.getProyecto("Desarrollo de un Sistema");
         proyecto.agregarTarea(tarea1);
         proyecto.agregarTarea(tarea2);
 
@@ -23,29 +25,128 @@ public class Main {
         subtarea2.setEstado(new EnProgreso());
         tarea2.setEstado(new Pendiente());
 
-        proyecto.mostrarProyecto();
-
-
+        proyecto.mostrarProyecto();*/
+// Recupero txt ingresado por Usuario
         Scanner scanner = new Scanner(System.in);
-
+// Muestra Menu
         while (true) {
-            System.out.println("\nSeleccione una opción:");
-            System.out.println("1. Cambiar estado de una tarea");
-            System.out.println("2. Cambiar estado de una subtarea");
-            System.out.println("3. Mostrar proyecto");
+            System.out.println("\nSeleccione una opción: ");
+            System.out.println("1. Gestión de Proyecto");
+            System.out.println("2. Gestión de Tareas");
+            System.out.println("3. Gestión de Responsable");
             System.out.println("4. Salir");
 
-            int seleccion = scanner.nextInt();
+            int menu1 = scanner.nextInt();
 
-            switch (seleccion) {
+            switch (menu1) {
                 case 1:
-                    cambiarEstadoTarea(proyecto, scanner);
+                    System.out.println("\nSeleccione una opción: ");
+                    System.out.println("1. Crear Proyecto");
+                    System.out.println("2. Modificar Nombre del Proyecto");
+                    System.out.println("3. Eliminar Proyecto");
+                    System.out.println("4. Visualizar Proyecto");
+                    System.out.println("5. Volver");
+
+                    menu1 = scanner.nextInt();
+
+                    switch (menu1) {
+                        case 1:
+                            System.out.println("\nIngrese el Nombre del Proyecto a crear: ");
+                            String nombreProyecto = scanner.next();
+                            // Instancia Singleton
+                            proyecto = Proyecto.getProyecto(nombreProyecto);
+                            break;
+                        case 2:
+                            System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
+                            String newNombreProyecto = scanner.next();
+                            proyecto.setNombre(newNombreProyecto);
+                            break;
+                        case 3:
+                            System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
+                            System.out.println("Presione 1 para eliminar.");
+                            menu1 = scanner.nextInt();
+                            if (menu1 == 1){
+                                proyecto = null;
+                                System.out.println("\nEl Proyecto fue Eliminado.");
+                            }
+                            break;
+                        case 4:
+                            try {
+                                proyecto.mostrarProyecto();
+                            }catch (NullPointerException e){
+                                System.out.println("No existe un Proyecto creado");
+                            }
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            System.out.println("Opción no válida, intente nuevamente.");
+                    }
                     break;
                 case 2:
-                    cambiarEstadoSubtarea(proyecto, scanner);
+                    System.out.println("\nSeleccione una opción: ");
+                    System.out.println("1. Crear Tarea");
+                    System.out.println("2. Modificar Tarea");
+                    System.out.println("3. Eliminar Tarea");
+                    System.out.println("4. Volver");
+
+                    menu1 = scanner.nextInt();
+
+                    switch (menu1) {
+                        case 1:
+                            //Validamos que exista el Proyecto
+                            try{
+                                proyecto.getNombre();
+                            }catch (NullPointerException e){
+                                System.out.println("No existe un Proyecto creado");
+                                break;
+                            }
+                            System.out.println("\nIngrese el Nombre de la Tarea a crear: ");
+                            String nombreTarea = scanner.next();
+                            System.out.println("\nIngrese el Nombre del Responsable que ejecuta la Tarea: ");
+                            String nombreResponsable = scanner.next();
+                            Usuario usuario = new Usuario(nombreResponsable);
+                            Tarea tarea = new Tarea(nombreTarea, usuario);
+                            tarea.setEstado(new Pendiente());
+                            proyecto.agregarTarea(tarea);
+                            break;
+                        case 2:
+                            System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
+                            String newNombreProyecto = scanner.next();
+                            proyecto.setNombre(newNombreProyecto);
+                            break;
+                        case 3:
+                            System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
+                            System.out.println("Presione 1 para eliminar.");
+                            menu1 = scanner.nextInt();
+                            if (menu1 == 1){
+                                proyecto = null;
+                                System.out.println("\nEl Proyecto fue Eliminado.");
+                            }
+                            break;
+                        case 4:
+                            try {
+                                proyecto.mostrarProyecto();
+                            }catch (NullPointerException e){
+                                System.out.println("No existe un Proyecto creado");
+                            }
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            System.out.println("Opción no válida, intente nuevamente.");
+                    }
                     break;
                 case 3:
-                    proyecto.mostrarProyecto();
+                    System.out.println("\nSeleccione una opción: ");
+                    System.out.println("1. Crear Responsable");
+                    System.out.println("2. Modificar Nombre del Responsable");
+                    System.out.println("3. Eliminar Responsable");
+                    System.out.println("4. Volver");
+
+                    int menu4 = scanner.nextInt();
+
+                    //proyecto.mostrarProyecto();
                     break;
                 case 4:
                     System.out.println("Saliendo...");
