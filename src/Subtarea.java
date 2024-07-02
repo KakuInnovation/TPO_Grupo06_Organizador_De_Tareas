@@ -8,4 +8,6 @@ public class Subtarea extends Tarea {
     public void mostrarEstado() {
         System.out.println("Nombre Subtarea: " + getDescripcion() + " || " + getEstado().getClass().getSimpleName() + " || " + "Responsable: " + super.getAsignadoA());
     }
+
+
 }

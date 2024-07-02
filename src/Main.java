@@ -204,12 +204,14 @@ public class Main {
                                                     String newNombreTarea = scanner.next();
                                                     tarea.setDescripcion(newNombreTarea);
                                                     proyecto.mostrarProyecto();
+                                                    break;
                                                 case 2:
                                                     System.out.print("Ingrese el nombre del Responsable a editar: ");
-                                                    String newNombreResp = scanner.nextLine();
+                                                    String newNombreResp = scanner.next();
                                                     Usuario usuario = new Usuario(newNombreResp);
                                                     tarea.setAsignadoA(usuario);
                                                     proyecto.mostrarProyecto();
+                                                    break;
                                                 default:
                                                     System.out.println("Opción no válida, intente nuevamente.");
                                             }
