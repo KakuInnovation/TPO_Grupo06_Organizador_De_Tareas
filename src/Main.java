@@ -222,12 +222,13 @@ public class Main {
                                     }
                                     break;
                                 case 3: //3. Eliminar Tarea
-                                    System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
+                                    System.out.println("\n¿SEGURO QUIERE ELIMINAR LA TAREA?");
                                     System.out.println("Ingrese 1 para eliminar.");
                                     menu1 = scanner.nextInt();
                                     if (menu1 == 1) {
-                                        proyecto = null;
-                                        System.out.println("\nEl Proyecto fue Eliminado.");
+                                        //proyecto = null;
+                                        System.out.println("\nLa Tarea fue Eliminada.");
+                                        proyecto.mostrarProyecto();
                                     }
                                     break;
                                 case 4: //4. Volver
@@ -306,20 +307,32 @@ public class Main {
                                     System.out.println("\nEl Proyecto fue actualizado satisfactoriamente.");
                                     break;
                                 case 2: //2. Modificar Subtarea
-/*                                    proyecto.mostrarProyecto();
-                                    System.out.println("\nIngrese el nombre de la tarea a editar: ");
-                                    String nombreTarea = scanner.next();
-                                    Tarea tarea = proyecto.getTarea(nombreTarea);
-                                    if (tarea != null) {
+                                    proyecto.mostrarProyecto();
+
+                                    System.out.println("\nIngrese el Nombre de la Tarea que contiene la subtarea a modificar: ");
+                                    String nomTarea = scanner.next();
+                                    while (nomTarea.isEmpty()) {
+                                        System.out.println("\nIngrese el Nombre de la Tarea que contiene la subtarea a modificar: ");
+                                        nomTarea = scanner.next();
+                                    }
+
+                                    Tarea task = proyecto.getTarea(nomTarea);
+
+                                    System.out.println("\nIngrese el nombre de la Subtarea a editar: ");
+                                    String nombreSubtarea = scanner.next();
+                                    Subtarea subtarea = task.getSubtarea(nombreSubtarea);
+
+                                    if (subtarea != null) {
                                         System.out.println("\n---------------------------------");
-                                        System.out.println("-------- MODIFICAR TAREA --------");
+                                        System.out.println("------ MODIFICAR SUBTAREA -------");
                                         System.out.println("---------------------------------");
                                         System.out.println("Seleccione una opción: ");
-                                        System.out.println(" 1. Modificar Nombre");
-                                        System.out.println(" 2. Modificar Responsable");
-                                        System.out.println(" 3. Volver");
+                                        System.out.println(" 1. Modificar Nombre");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
+                                        System.out.println(" 2. Modificar Responsable");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
+                                        System.out.println(" 3. Modificar Estado"); //TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH OBTENER STATUS DE SUBTAREAS PARA ACTUALIZAR LA TAREA.
+                                        System.out.println(" 4. Volver");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
                                         System.out.println("---------------------------------");
-
+/*
                                         try {
                                             menu1 = scanner.nextInt();
 
@@ -339,16 +352,18 @@ public class Main {
                                                     break;
                                                 case 3:
                                                     break;
+                                                case 4:
+                                                    break;
                                                 default:
                                                     System.out.println("Opción no válida, intente nuevamente.");
                                             }
                                         }catch (InputMismatchException e) {
                                             System.out.println("Debes insertar un número");
                                             scanner.next();
-                                        }
+                                        }*/
                                     }else {
                                         System.out.println("Tarea no encontrada.");
-                                    }*/
+                                    }
                                     break;
                                 case 3: //3. Eliminar Subtarea
 /*                                    System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");

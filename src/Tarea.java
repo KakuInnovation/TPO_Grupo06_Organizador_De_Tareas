@@ -53,4 +53,11 @@ public class Tarea implements Estado {
             subtarea.mostrarEstado();
         }
     }
+
+    public Subtarea getSubtarea(String nombre) {
+        return subtareas.stream()
+                .filter(subtarea -> subtarea.getDescripcion().equals(nombre))
+                .findFirst()
+                .orElse(null);
+    }
 }
