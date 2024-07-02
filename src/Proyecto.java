@@ -44,4 +44,11 @@ public class Proyecto {
             tarea.mostrarEstado();
         }
     }
+
+    public Tarea getTarea(String nombre) {
+        return tareas.stream()
+                .filter(tarea -> tarea.getDescripcion().equals(nombre))
+                .findFirst()
+                .orElse(null);
+    }
 }

@@ -182,8 +182,44 @@ public class Main {
                                 case 2: //2. Modificar Tarea
                                     proyecto.mostrarProyecto();
                                     System.out.println("\nIngrese el nombre de la tarea a editar: ");
-                                    String newNombreProyecto = scanner.next();
-                                    proyecto.setNombre(newNombreProyecto);
+                                    String nombreTarea = scanner.next();
+                                    Tarea tarea = proyecto.getTarea(nombreTarea);
+                                    if (tarea != null) {
+
+                                        System.out.println("\n---------------------------------");
+                                        System.out.println("-------- MODIFICAR TAREA --------");
+                                        System.out.println("---------------------------------");
+                                        System.out.println("Seleccione una opción: ");
+                                        System.out.println(" 1. Modificar Nombre");
+                                        System.out.println(" 2. Modificar Responsable");
+                                        System.out.println(" 4. Volver");
+                                        System.out.println("---------------------------------");
+
+                                        try {
+                                            menu1 = scanner.nextInt();
+
+                                            switch (menu1){
+                                                case 1: //1. Modificar Nombre
+                                                    System.out.print("Ingrese el nombre de la Tarea a editar: ");
+                                                    String newNombreTarea = scanner.next();
+                                                    tarea.setDescripcion(newNombreTarea);
+                                                    proyecto.mostrarProyecto();
+                                                case 2:
+                                                    System.out.print("Ingrese el nombre del Responsable a editar: ");
+                                                    String newNombreResp = scanner.nextLine();
+                                                    Usuario usuario = new Usuario(newNombreResp);
+                                                    tarea.setAsignadoA(usuario);
+                                                    proyecto.mostrarProyecto();
+                                                default:
+                                                    System.out.println("Opción no válida, intente nuevamente.");
+                                            }
+                                        }catch (InputMismatchException e) {
+                                            System.out.println("Debes insertar un número");
+                                            scanner.next();
+                                        }
+                                    }else {
+                                        System.out.println("Tarea no encontrada.");
+                                    }
                                     break;
                                 case 3: //3. Eliminar Tarea
                                     System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");

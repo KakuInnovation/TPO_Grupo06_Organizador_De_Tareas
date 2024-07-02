@@ -18,6 +18,10 @@ public class Tarea implements Estado {
         return descripcion;
     }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Estado getEstado() {
         return estado;
     }
@@ -36,6 +40,10 @@ public class Tarea implements Estado {
 
     public String getAsignadoA() {
         return asignadoA.getNombre();
+    }
+
+    public void setAsignadoA(Usuario asignadoA) {
+        this.asignadoA = asignadoA;
     }
 
     @Override
