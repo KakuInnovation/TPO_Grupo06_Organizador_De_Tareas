@@ -111,7 +111,7 @@ public class Main {
                         System.out.println("---------------------------------");
                         System.out.println("Seleccione una opción: ");
                         System.out.println(" 1. Crear Tarea");
-                        System.out.println(" 2. Modificar Tarea");
+                        System.out.println(" 2. Modificar Subtarea");
                         System.out.println(" 3. Eliminar Tarea");
                         System.out.println(" 4. Volver");
                         System.out.println("---------------------------------");
@@ -182,8 +182,7 @@ public class Main {
                                 case 2: //2. Modificar Tarea
                                     proyecto.mostrarProyecto();
                                     System.out.println("\nIngrese el nombre de la tarea a editar: ");
-                                    String newNombreProyecto = scanner.next();
-                                    proyecto.setNombre(newNombreProyecto);
+                                    cambiarEstadoSubtarea(proyecto, scanner);
                                     break;
                                 case 3: //3. Eliminar Tarea
                                     System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
@@ -241,11 +240,10 @@ public class Main {
                                 proyecto.agregarTarea(tarea);
                                 break;
                             case 2: //2. Modificar Tarea
-                                System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
-                                String newNombreProyecto = scanner.next();
-                                proyecto.setNombre(newNombreProyecto);
+                                System.out.println("\nIngrese el nuevo Nombre del Responsable: ");
+                                nombreResponsable = scanner.next();
+                                proyecto.setNombre(nombreResponsable);
                                 break;
-                            case 3: //3. Eliminar Tarea
                                 System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
                                 System.out.println("Ingrese 1 para eliminar.");
                                 menu1 = scanner.nextInt();
