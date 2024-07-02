@@ -67,6 +67,10 @@ public class Main {
                                 case 1:
                                     System.out.println("\nIngrese el Nombre del Proyecto a crear: ");
                                     String nombreProyecto = scanner.next();
+                                    if (nombreProyecto.isEmpty()) {
+                                        System.out.println("El nombre del Proyecto no puede estar vacio");
+                                        break;
+                                    }
                                     // Instancia Singleton
                                     proyecto = Proyecto.getProyecto(nombreProyecto);
                                     break;
@@ -128,8 +132,18 @@ public class Main {
                                         // Creación de Tareas
                                         System.out.println("\nIngrese el Nombre de la Tarea a crear: ");
                                         String nombreTarea = scanner.next();
+                                        while (nombreTarea.isEmpty()) {
+                                            System.out.println("\nIngrese el Nombre de la Tarea a crear: ");
+                                            nombreTarea = scanner.next();
+                                            proyecto.setNombre(nombreTarea);
+                                            }
                                         System.out.println("\nIngrese el nombre del Responsable de la Tarea: ");
                                         String nombreResponsable = scanner.next();
+                                        while (nombreResponsable.isEmpty()) {
+                                            System.out.println("\nIngrese el nombre del Responsable de la Tarea: ");
+                                            nombreResponsable = scanner.next();
+                                            proyecto.setNombre(nombreResponsable);
+                                        }
                                         Usuario usuario = new Usuario(nombreResponsable);
                                         Tarea tarea = new Tarea(nombreTarea, usuario);
                                         proyecto.agregarTarea(tarea);
@@ -138,8 +152,18 @@ public class Main {
                                             // Creación de Subtareas
                                             System.out.println("\nIngrese el Nombre de la SubTarea a crear: ");
                                             String nombreSubTarea = scanner.next();
+                                            while (nombreSubTarea.isEmpty()) {
+                                                System.out.println("\nIngrese el Nombre de la SubTarea a crear: ");
+                                                nombreSubTarea = scanner.next();
+                                                proyecto.setNombre(nombreSubTarea);
+                                            }
                                             System.out.println("\nIngrese el nombre del Responsable de la Subtarea: ");
                                             String nombreRespSubtarea = scanner.next();
+                                            while (nombreRespSubtarea.isEmpty()) {
+                                                System.out.println("\nIngrese el nombre del Responsable de la Subtarea: ");
+                                                nombreRespSubtarea = scanner.next();
+                                                proyecto.setNombre(nombreRespSubtarea);
+                                            }
                                             Usuario usuarioSubtarea = new Usuario(nombreRespSubtarea);
                                             Subtarea subtarea = new Subtarea(nombreSubTarea, usuarioSubtarea);
                                             tarea.agregarSubtarea(subtarea);
