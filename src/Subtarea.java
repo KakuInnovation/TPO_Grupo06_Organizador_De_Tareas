@@ -6,6 +6,6 @@ public class Subtarea extends Tarea {
 
     @Override
     public void mostrarEstado() {
-        System.out.println("Estado de la subtarea: " + getDescripcion() + " || " + getEstado().getClass().getSimpleName());
+        System.out.println("Nombre Subtarea: " + getDescripcion() + " || " + getEstado().getClass().getSimpleName() + " || " + "Responsable: " + super.getAsignadoA());
     }
 }

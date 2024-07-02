@@ -17,6 +17,7 @@ public class Proyecto {
     public static Proyecto getProyecto(String nombre) {
         if (miProyecto == null) {
             miProyecto = new Proyecto(nombre);
+            System.out.println("\nEl Proyecto fue creado satisfactoriamente.");
         }
         else{
             System.out.println("No se permite la gestión de más de un Proyecto.");

@@ -69,7 +69,6 @@ public class Main {
                                     String nombreProyecto = scanner.next();
                                     // Instancia Singleton
                                     proyecto = Proyecto.getProyecto(nombreProyecto);
-                                    System.out.println("\nEl Proyecto fue creado satisfactoriamente.");
                                     break;
                                 case 2:
                                     System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
@@ -156,7 +155,8 @@ public class Main {
                                 System.out.println("\nEl Proyecto fue actualizado satisfactoriamente.");
                                 break;
                             case 2: //2. Modificar Tarea
-                                System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
+                                proyecto.mostrarProyecto();
+                                System.out.println("\nIngrese el nombre de la tarea a editar: ");
                                 String newNombreProyecto = scanner.next();
                                 proyecto.setNombre(newNombreProyecto);
                                 break;

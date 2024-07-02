@@ -34,9 +34,13 @@ public class Tarea implements Estado {
         return subtareas;
     }
 
+    public String getAsignadoA() {
+        return asignadoA.getNombre();
+    }
+
     @Override
     public void mostrarEstado() {
-        System.out.println("Estado de la tarea: " + descripcion + " | " + estado.getClass().getSimpleName());
+        System.out.println("Nombre Tarea: " + descripcion + " | " + "Estado: " + estado.getClass().getSimpleName() + " | " + "Responsable: " + asignadoA.getNombre());
         for (Subtarea subtarea : subtareas) {
             subtarea.mostrarEstado();
         }
