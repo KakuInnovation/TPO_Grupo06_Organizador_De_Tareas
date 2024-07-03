@@ -7,6 +7,7 @@ public class Subtarea extends Tarea {
 
     public Subtarea(String descripcion, Usuario asignadoA) {
         super(descripcion, asignadoA);
+        this.completada = false;
     }
 
     @Override
@@ -16,5 +17,13 @@ public class Subtarea extends Tarea {
 
     public String getDescripcion() {
         return super.getDescripcion();
+    }
+
+    public boolean isCompletada() {
+        return completada;
+    }
+
+    public void setCompletada(boolean completada) {
+        this.completada = completada;
     }
 }

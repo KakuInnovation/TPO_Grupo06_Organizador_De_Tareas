@@ -7,29 +7,7 @@ public class Main {
         int opcion = 1;
         int menu1;
         boolean salir = false;
-/*        Usuario usuario1 = new Usuario("Matías");
-        Usuario usuario2 = new Usuario("Lautaro");
-        Usuario usuario3 = new Usuario("Alejandro");
 
-        Tarea tarea1 = new Tarea("Diseñar base de datos", usuario3);
-        Subtarea subtarea1 = new Subtarea("Crear tablas", usuario1);
-        Subtarea subtarea2 = new Subtarea("Definir relaciones", usuario2);
-        tarea1.agregarSubtarea(subtarea1);
-        tarea1.agregarSubtarea(subtarea2);
-
-        Tarea tarea2 = new Tarea("Desarrollar API", usuario2);
-
-        // Instancia Singleton
-        Proyecto proyecto = Proyecto.getProyecto("Desarrollo de un Sistema");
-        proyecto.agregarTarea(tarea1);
-        proyecto.agregarTarea(tarea2);
-
-        tarea1.setEstado(new EnProgreso());
-        subtarea1.setEstado(new Completada());
-        subtarea2.setEstado(new EnProgreso());
-        tarea2.setEstado(new Pendiente());
-
-        proyecto.mostrarProyecto();*/
 // Recupero txt ingresado por Usuario
         Scanner scanner = new Scanner(System.in).useDelimiter("\\n");
 // Muestra Menu
@@ -41,8 +19,7 @@ public class Main {
             System.out.println("    1. Gestión de Proyecto");
             System.out.println("    2. Gestión de Tareas");
             System.out.println("    3. Gestión de Subtareas");
-            System.out.println("    4. Gestión de Responsables");
-            System.out.println("    5. Salir");
+            System.out.println("    4. Salir");
             System.out.println("---------------------------------");
 
             try {
@@ -114,7 +91,8 @@ public class Main {
                         System.out.println(" 1. Crear Tarea");
                         System.out.println(" 2. Modificar Tarea");
                         System.out.println(" 3. Eliminar Tarea");
-                        System.out.println(" 4. Volver");
+                        System.out.println(" 4. Editar Responsable");
+                        System.out.println(" 5. Volver");
                         System.out.println("---------------------------------");
 
                         try {
@@ -129,6 +107,7 @@ public class Main {
                                         System.out.println("No existe un Proyecto creado.");
                                         break;
                                     }
+                                    opcion = 1;
                                     while (opcion == 1) {
                                         // Creación de Tareas
                                         System.out.println("\nIngrese el Nombre de la Tarea a crear: ");
@@ -222,16 +201,26 @@ public class Main {
                                     }
                                     break;
                                 case 3: //3. Eliminar Tarea
-                                    System.out.println("\n¿SEGURO QUIERE ELIMINAR LA TAREA?");
-                                    System.out.println("Ingrese 1 para eliminar.");
-                                    menu1 = scanner.nextInt();
-                                    if (menu1 == 1) {
-                                        //proyecto = null;
-                                        System.out.println("\nLa Tarea fue Eliminada.");
-                                        proyecto.mostrarProyecto();
-                                    }
+                                    System.out.print("Ingrese el nombre de la tarea a eliminar: ");
+                                    nombreTarea = scanner.next();
+                                    proyecto.eliminarTarea(nombreTarea);
+                                    System.out.println("Tarea eliminada exitosamente.");
+
                                     break;
-                                case 4: //4. Volver
+                                case 4: //4. Editar responsable
+                                    proyecto.mostrarProyecto();
+                                    System.out.println("\nIngrese el nombre de la tarea a editar: ");
+                                    nombreTarea = scanner.next();
+                                    Tarea tarea2 = proyecto.getTarea(nombreTarea);
+                                    if (tarea2 != null) {
+                                        System.out.println("Ingrese el nombre del nuevo Responsable: ");
+                                        String nuevoResponsable = scanner.next();
+                                        Usuario usuario = new Usuario(nuevoResponsable);
+                                        tarea2.setAsignadoA(usuario);
+                                    }
+                                    proyecto.mostrarProyecto();
+                                    break;
+                                case 5: //5. Volver
                                     try {
                                         proyecto.mostrarProyecto();
                                     } catch (NullPointerException e) {
@@ -277,7 +266,6 @@ public class Main {
                                         System.out.println("\nIngrese el Nombre de la Tarea a la que se le agregará la nueva Subtarea: ");
                                         nombreTarea = scanner.next();
                                     }
-
                                     Tarea tarea = proyecto.getTarea(nombreTarea);
                                     opcion = 1;
                                     while (opcion == 1) {
@@ -298,6 +286,9 @@ public class Main {
                                         Subtarea subtarea = new Subtarea(nombreSubTarea, usuarioSubtarea);
                                         tarea.agregarSubtarea(subtarea);
                                         subtarea.setEstado(new Pendiente());
+                                        if (!tarea.subtareasCompletadas()) {
+                                            tarea.setEstado(new Pendiente());
+                                        }
                                         System.out.println("\n¿Quiere agregar otra Subtarea?");
                                         System.out.println("1 - SI | 2 - NO");
                                         opcion = scanner.nextInt();
@@ -315,64 +306,110 @@ public class Main {
                                         System.out.println("\nIngrese el Nombre de la Tarea que contiene la subtarea a modificar: ");
                                         nomTarea = scanner.next();
                                     }
+                                    try {
+                                        Tarea task = proyecto.getTarea(nomTarea);
 
-                                    Tarea task = proyecto.getTarea(nomTarea);
+                                        System.out.println("\nIngrese el nombre de la Subtarea a editar: ");
+                                        String nombreSubtarea = scanner.next();
+                                        Subtarea subtarea = task.getSubtarea(nombreSubtarea);
 
-                                    System.out.println("\nIngrese el nombre de la Subtarea a editar: ");
-                                    String nombreSubtarea = scanner.next();
-                                    Subtarea subtarea = task.getSubtarea(nombreSubtarea);
+                                        if (subtarea != null) {
+                                            System.out.println("\n---------------------------------");
+                                            System.out.println("------ MODIFICAR SUBTAREA -------");
+                                            System.out.println("---------------------------------");
+                                            System.out.println("Seleccione una opción: ");
+                                            System.out.println(" 1. Modificar Nombre");
+                                            System.out.println(" 2. Modificar Responsable");
+                                            System.out.println(" 3. Modificar Estado");
+                                            System.out.println(" 4. Volver");
+                                            System.out.println("---------------------------------");
 
-                                    if (subtarea != null) {
-                                        System.out.println("\n---------------------------------");
-                                        System.out.println("------ MODIFICAR SUBTAREA -------");
-                                        System.out.println("---------------------------------");
-                                        System.out.println("Seleccione una opción: ");
-                                        System.out.println(" 1. Modificar Nombre");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
-                                        System.out.println(" 2. Modificar Responsable");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
-                                        System.out.println(" 3. Modificar Estado"); //TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH OBTENER STATUS DE SUBTAREAS PARA ACTUALIZAR LA TAREA.
-                                        System.out.println(" 4. Volver");//TODO: FALTA AGREGAR LA LÓGICA EN EL SWITCH
-                                        System.out.println("---------------------------------");
-/*
-                                        try {
-                                            menu1 = scanner.nextInt();
+                                            try {
+                                                menu1 = scanner.nextInt();
 
-                                            switch (menu1){
-                                                case 1: //1. Modificar Nombre
-                                                    System.out.print("Ingrese el nombre de la Tarea a editar: ");
-                                                    String newNombreTarea = scanner.next();
-                                                    tarea.setDescripcion(newNombreTarea);
-                                                    proyecto.mostrarProyecto();
-                                                    break;
-                                                case 2:
-                                                    System.out.print("Ingrese el nombre del Responsable a editar: ");
-                                                    String newNombreResp = scanner.next();
-                                                    Usuario usuario = new Usuario(newNombreResp);
-                                                    tarea.setAsignadoA(usuario);
-                                                    proyecto.mostrarProyecto();
-                                                    break;
-                                                case 3:
-                                                    break;
-                                                case 4:
-                                                    break;
-                                                default:
-                                                    System.out.println("Opción no válida, intente nuevamente.");
+                                                switch (menu1) {
+                                                    case 1: //1. Modificar Nombre
+                                                        System.out.print("Ingrese el nombre de la Subtarea a editar: ");
+                                                        String newNombreSubTarea = scanner.next();
+                                                        subtarea.setDescripcion(newNombreSubTarea);
+                                                        proyecto.mostrarProyecto();
+                                                        break;
+                                                    case 2:
+                                                        System.out.print("Ingrese el nuevo nombre del Responsable: ");
+                                                        String newNombreResp = scanner.next();
+                                                        Usuario usuario = new Usuario(newNombreResp);
+                                                        subtarea.setAsignadoA(usuario);
+                                                        proyecto.mostrarProyecto();
+                                                        break;
+                                                    case 3:
+                                                        System.out.println("\n---------------------------------");
+                                                        System.out.println("----- MODIFICAR ESTADO SUBTAREA ------");
+                                                        System.out.println("---------------------------------");
+                                                        System.out.println("Seleccione una opción: ");
+                                                        System.out.println(" 1. Pendiente");
+                                                        System.out.println(" 2. Completada");
+                                                        System.out.println(" 3. Volver");
+                                                        System.out.println("---------------------------------");
+                                                        try {
+                                                            menu1 = scanner.nextInt();
+                                                            switch (menu1) {
+                                                                case 1: //1. Modificar Estado Subtarea
+                                                                    subtarea.setCompletada(false);
+                                                                    task.setEstado(new Pendiente());
+                                                                    subtarea.setEstado(new Pendiente());
+                                                                    proyecto.mostrarProyecto();
+                                                                    break;
+                                                                case 2:
+                                                                    subtarea.setCompletada(true);
+                                                                    subtarea.setEstado(new Completada());
+                                                                    if (task.subtareasCompletadas()) {
+                                                                        task.setEstado(new Completada());
+                                                                    }
+                                                                    proyecto.mostrarProyecto();
+                                                                    break;
+                                                                case 3:
+                                                                    break;
+                                                                default:
+                                                                    System.out.println("Opción no válida, intente nuevamente.");
+                                                            }
+                                                        } catch (InputMismatchException e) {
+                                                            System.out.println("Debes insertar un número");
+                                                            scanner.next();
+                                                        }
+                                                        break;
+                                                    case 4:
+                                                        break;
+                                                    default:
+                                                        System.out.println("Opción no válida, intente nuevamente.");
+                                                }
+                                            } catch (InputMismatchException e) {
+                                                System.out.println("Debes insertar un número");
+                                                scanner.next();
                                             }
-                                        }catch (InputMismatchException e) {
-                                            System.out.println("Debes insertar un número");
-                                            scanner.next();
-                                        }*/
-                                    }else {
-                                        System.out.println("Tarea no encontrada.");
+                                        } else {
+                                            System.out.println("Tarea no encontrada.");
+                                        }
+                                        break;
                                     }
-                                    break;
+                                    catch (NullPointerException e){
+                                        System.out.println("Tarea no encontrada.");
+                                        proyecto.mostrarProyecto();
+                                    }
                                 case 3: //3. Eliminar Subtarea
-/*                                    System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
-                                    System.out.println("Ingrese 1 para eliminar.");
-                                    menu1 = scanner.nextInt();
-                                    if (menu1 == 1) {
-                                        proyecto = null;
-                                        System.out.println("\nEl Proyecto fue Eliminado.");
-                                    }*/
+                                    proyecto.mostrarProyecto();
+                                    System.out.print("Ingrese el nombre de la Tarea donde se encuentra la Subtarea: ");
+                                    nombreTarea = scanner.next();
+                                    tarea = proyecto.getTarea(nombreTarea);
+                                    System.out.print("Ingrese el nombre de la subtarea a eliminar: ");
+                                    String nombreSubtarea = scanner.next();
+                                    tarea.eliminarSubTarea(nombreSubtarea);
+                                    System.out.println("Tarea eliminada exitosamente.");
+                                    if (tarea.subtareasCompletadas()) {
+                                        tarea.setEstado(new Completada());
+                                    }
+                                    else
+                                        tarea.setEstado(new Pendiente());
+                                    proyecto.mostrarProyecto();
                                     break;
                                 case 4: //4. Volver
                                     try {
@@ -389,63 +426,8 @@ public class Main {
                             System.out.println("Debes insertar un número");
                             scanner.next();
                         }
-                    case 4: //4) GESTIÓN DE RESPONSABLES
-                        System.out.println("\n---------------------------------");
-                        System.out.println("---- GESTIÓN DE RESPONSABLES ----");
-                        System.out.println("---------------------------------");
-                        System.out.println("\nSeleccione una opción: ");
-                        System.out.println("    1. Crear Responsable");
-                        System.out.println("    2. Modificar Nombre del Responsable");
-                        System.out.println("    3. Eliminar Responsable");
-                        System.out.println("    4. Volver");
-                        System.out.println("---------------------------------");
-
-                        menu1 = scanner.nextInt();
-
-                        switch (menu1) {
-                            case 1: //1. Crear Responsable
-                                //Validamos que exista el Proyecto
-                                try {
-                                    proyecto.getNombre();
-                                } catch (NullPointerException e) {
-                                    System.out.println("No existe un Proyecto creado.");
-                                    break;
-                                }
-                                System.out.println("\nIngrese el Nombre de la Tarea a crear: ");
-                                String nombreTarea = scanner.next();
-                                System.out.println("\nIngrese el nombre del Responsable de la Tarea: ");
-                                String nombreResponsable = scanner.next();
-                                Usuario usuario = new Usuario(nombreResponsable);
-                                Tarea tarea = new Tarea(nombreTarea, usuario);
-                                tarea.setEstado(new Pendiente());
-                                proyecto.agregarTarea(tarea);
-                                break;
-                            case 2: //2. Modificar Tarea
-                                System.out.println("\nIngrese el nuevo Nombre del Proyecto: ");
-                                String newNombreProyecto = scanner.next();
-                                proyecto.setNombre(newNombreProyecto);
-                                break;
-                            case 3: //3. Eliminar Tarea
-                                System.out.println("\n¿SEGURO QUIERE ELIMINAR EL PROYECTO?");
-                                System.out.println("Ingrese 1 para eliminar.");
-                                menu1 = scanner.nextInt();
-                                if (menu1 == 1) {
-                                    proyecto = null;
-                                    System.out.println("\nEl Proyecto fue Eliminado.");
-                                }
-                                break;
-                            case 4: //4. Volver
-                                try {
-                                    proyecto.mostrarProyecto();
-                                } catch (NullPointerException e) {
-                                    System.out.println("No existe un Proyecto creado");
-                                }
-                                break;
-                            default:
-                                System.out.println("Opción no válida, intente nuevamente.");
-                        }
                         break;
-                    case 5: //5. SALIR
+                    case 4: //4. SALIR
                         System.out.println("Saliendo...");
                         salir = true;
                         break;
@@ -456,67 +438,6 @@ public class Main {
                 System.out.println("Debes insertar un número");
                 scanner.next();
             }
-        }
-    }
-    private static void cambiarEstadoSubtarea(Proyecto proyecto, Scanner scanner) {
-        System.out.println("\nSeleccione una tarea para ver sus subtareas:");
-        for (int i = 0; i < proyecto.getTareas().size(); i++) {
-            System.out.println((i + 1) + ". " + proyecto.getTareas().get(i).getDescripcion());
-        }
-
-        int seleccionTarea = scanner.nextInt();
-        if (seleccionTarea > 0 && seleccionTarea <= proyecto.getTareas().size()) {
-            Tarea tarea = proyecto.getTareas().get(seleccionTarea - 1);
-            System.out.println("Seleccione una subtarea para cambiar su estado:");
-            for (int i = 0; i < tarea.getSubtareas().size(); i++) {
-                System.out.println((i + 1) + ". " + tarea.getSubtareas().get(i).getDescripcion());
-            }
-
-            int seleccionSubtarea = scanner.nextInt();
-            if (seleccionSubtarea > 0 && seleccionSubtarea <= tarea.getSubtareas().size()) {
-                Subtarea subtarea = tarea.getSubtareas().get(seleccionSubtarea - 1);
-                cambiarEstado(subtarea, scanner);
-            } else {
-                System.out.println("Selección no válida.");
-            }
-        } else {
-            System.out.println("Selección no válida.");
-        }
-    }
-
-    private static void cambiarEstado(Tarea tarea, Scanner scanner) {
-        System.out.println("Seleccione el nuevo estado:");
-        System.out.println("1. Pendiente");
-        System.out.println("2. En Progreso");
-        System.out.println("3. Completada");
-
-        int estadoSeleccionado = scanner.nextInt();
-        switch (estadoSeleccionado) {
-            case 1:
-                tarea.setEstado(new Pendiente());
-                break;
-            case 2:
-                tarea.setEstado(new EnProgreso());
-                break;
-            case 3:
-                tarea.setEstado(new Completada());
-                break;
-            default:
-                System.out.println("Selección no válida.");
-        }
-    }
-    private static void cambiarEstadoTarea(Proyecto proyecto, Scanner scanner) {
-        System.out.println("\nSeleccione una tarea para cambiar su estado:");
-        for (int i = 0; i < proyecto.getTareas().size(); i++) {
-            System.out.println((i + 1) + ". " + proyecto.getTareas().get(i).getDescripcion());
-        }
-
-        int seleccion = scanner.nextInt();
-        if (seleccion > 0 && seleccion <= proyecto.getTareas().size()) {
-            Tarea tarea = proyecto.getTareas().get(seleccion - 1);
-            cambiarEstado(tarea, scanner);
-        } else {
-            System.out.println("Selección no válida.");
         }
     }
 

@@ -51,4 +51,7 @@ public class Proyecto {
                 .findFirst()
                 .orElse(null);
     }
+    public void eliminarTarea(String nombre) {
+        tareas.removeIf(tarea -> tarea.getDescripcion().equals(nombre));
+    }
 }

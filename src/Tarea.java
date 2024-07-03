@@ -60,4 +60,10 @@ public class Tarea implements Estado {
                 .findFirst()
                 .orElse(null);
     }
+    public boolean subtareasCompletadas(){
+        return subtareas.stream().allMatch(subtarea -> subtarea.isCompletada());
+    }
+    public void eliminarSubTarea(String nombre) {
+        subtareas.removeIf(subtarea-> subtarea.getDescripcion().equals(nombre));
+    }
 }
